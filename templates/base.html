@@ -1,0 +1,294 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio de WIN'S Dev — Développeur web Django & Python. Projets, blog et contact.">
+    <meta name="author" content="WIN'S Dev">
+    <link rel="icon" type="image/svg+xml" href="{% static 'portfolio/images/favicon.svg' %}">
+    <title>{% block title %}WIN'S DEV — Portfolio{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'PT Mono', monospace; }
+        .reveal {
+            opacity: 0;
+            translate: 0 var(--reveal-offset, 30px);
+            transition: opacity 0.6s ease-out, translate 0.6s ease-out !important;
+            will-change: opacity, translate;
+        }
+        .reveal.reveal-visible {
+            opacity: 1;
+            translate: 0 0;
+            transition-delay: calc(var(--index, 0) * 100ms) !important;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1 !important;
+                translate: none !important;
+                transition: none !important;
+                will-change: auto;
+            }
+        }
+        .mm-menu {
+            transform-origin: top right;
+            border-radius: 9999px;
+            transform: scale(0.12);
+            opacity: 0;
+            pointer-events: none;
+            will-change: transform, opacity, border-radius;
+            transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1),
+                        border-radius 550ms cubic-bezier(0.22, 1, 0.36, 1),
+                        opacity 350ms ease;
+        }
+        .mm-menu.mm-open {
+            transform: scale(1);
+            border-radius: 0;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .mm-menu .mm-inner {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 250ms ease 120ms, transform 350ms ease 120ms;
+        }
+        .mm-menu.mm-open .mm-inner {
+            opacity: 1;
+            transform: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .mm-menu, .mm-menu .mm-inner {
+                transition: none !important;
+                border-radius: 0 !important;
+                transform: none !important;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-white text-black min-h-screen flex flex-col antialiased">
+    <div id="loader-screen" class="fixed inset-0 z-[9999] flex items-center justify-center bg-white">
+        <div class="text-center flex flex-col items-center">
+            <span class="text-4xl sm:text-5xl font-extrabold text-black tracking-widest animate-pulse">WD</span>
+            <div class="mt-8 w-[200px] h-[2px] bg-gray-200 overflow-hidden rounded-full">
+                <div id="loader-bar" class="h-full bg-black transition-[width]" style="width:0%"></div>
+            </div>
+            <p id="loader-pct" class="mt-3 text-sm text-gray-600 tabular-nums">0%</p>
+        </div>
+    </div>
+    <noscript>
+        <style>#loader-screen{display:none}#page-content{opacity:1!important}.reveal{opacity:1!important;translate:none!important;transition:none!important}</style>
+    </noscript>
+
+    <div id="page-content" class="flex-1 flex flex-col opacity-0">
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-3 sm:px-4 py-4 flex items-center justify-between gap-2 sm:gap-4">
+            <a href="{% url 'portfolio:accueil' %}" class="group flex items-center gap-2 sm:gap-3 text-black">
+                <span class="flex items-center gap-2">
+                    <span aria-hidden="true" class="hidden sm:block h-px w-6 bg-black/40 transition-all duration-300 group-hover:w-10"></span>
+                    <span class="inline-block -rotate-4 text-base sm:text-lg font-bold tracking-widest leading-none whitespace-nowrap">
+                        <span class="inline-block rotate-8">W</span>IN'S_<span class="text-yellow-500">DE</span><span class="inline-block -rotate-8 text-yellow-500">V</span>
+                    </span>
+                    <span aria-hidden="true" class="hidden sm:block h-px w-6 bg-black/40 transition-all duration-300 group-hover:w-10"></span>
+                    <span aria-hidden="true" class="inline-block w-1.5 h-4 sm:h-5 bg-yellow-500 animate-pulse"></span>
+                </span>
+            </a>
+            <div class="flex items-center gap-2 sm:gap-4">
+                <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-800">
+                    <a href="{% url 'portfolio:accueil' %}#projets" class="group relative hover:text-black transition">Projets<span class="absolute left-0 -bottom-1.5 h-0.5 w-0 bg-black rounded-full transition-all duration-300 ease-out group-hover:w-full"></span></a>
+                    <a href="{% url 'blog:liste_articles' %}" class="group relative hover:text-black transition">Blog<span class="absolute left-0 -bottom-1.5 h-0.5 w-0 bg-black rounded-full transition-all duration-300 ease-out group-hover:w-full"></span></a>
+                    <a href="{% url 'contact:contact' %}" class="group relative hover:text-black transition">Contact<span class="absolute left-0 -bottom-1.5 h-0.5 w-0 bg-black rounded-full transition-all duration-300 ease-out group-hover:w-full"></span></a>
+                </div>
+                <div class="hidden md:flex items-center gap-2 sm:gap-4">
+                    <a href="https://github.com/winnermkossivi-wq" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub" class="transition hover:opacity-80">
+                        <svg class="w-5 h-5" fill="#181717" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    </a>
+                    <a href="https://vm.tiktok.com/ZSqrsVEa4/" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok" class="transition hover:opacity-80">
+                        <svg class="w-5 h-5" fill="#000000" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/share/19STQWsnyK/" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook" class="transition hover:opacity-80">
+                        <svg class="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/reel/Dc3VrrxM6BY/?stkn=MXA4aTVtN2RuZXZqNg==" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram" class="transition hover:opacity-80">
+                        <svg class="w-5 h-5" fill="none" stroke="url(#ig-gradient)" stroke-width="1.8" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="ig-gradient" x1="0" y1="0" x2="24" y2="24"><stop offset="0%" stop-color="#833AB4"/><stop offset="50%" stop-color="#FD1D1D"/><stop offset="100%" stop-color="#FCB045"/></linearGradient></defs><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="url(#ig-gradient)" stroke="none"/></svg>
+                    </a>
+                    <a href="https://wa.me/22603653909" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp" class="transition hover:opacity-80">
+                        <svg class="w-5 h-5" fill="#25D366" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </a>
+                </div>
+                <button id="menu-btn" type="button" aria-label="Menu" aria-expanded="false"
+                        class="md:hidden flex items-center justify-center w-11 h-11 rounded-full bg-white border border-gray-200 text-black shadow-sm hover:border-gray-400 transition">
+                    <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="menu-backdrop" class="fixed inset-0 z-[55] bg-black/30 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="mobile-menu" class="mm-menu fixed inset-y-0 right-0 z-[60] w-72 max-w-[85vw] bg-white border-l border-gray-200 md:hidden">
+        <div class="mm-inner flex items-center justify-between px-5 py-4 border-b border-gray-200">
+            <span class="text-lg font-bold text-black">Menu</span>
+            <button id="menu-close" type="button" aria-label="Fermer le menu" class="text-black hover:text-black transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="mm-inner flex flex-col gap-1 p-4 text-sm font-medium text-gray-800">
+            <a href="{% url 'portfolio:accueil' %}#projets" onclick="toggleMenu(false)" class="group relative px-4 py-3 rounded-lg hover:text-black hover:bg-gray-100 transition">Projets<span class="absolute left-4 bottom-0 h-0.5 w-0 bg-black rounded-full transition-all duration-300 ease-out group-hover:w-[calc(100%-2rem)]"></span></a>
+            <a href="{% url 'blog:liste_articles' %}" onclick="toggleMenu(false)" class="group relative px-4 py-3 rounded-lg hover:text-black hover:bg-gray-100 transition">Blog<span class="absolute left-4 bottom-0 h-0.5 w-0 bg-black rounded-full transition-all duration-300 ease-out group-hover:w-[calc(100%-2rem)]"></span></a>
+            <a href="{% url 'contact:contact' %}" onclick="toggleMenu(false)" class="group relative px-4 py-3 rounded-lg hover:text-black hover:bg-gray-100 transition">Contact<span class="absolute left-4 bottom-0 h-0.5 w-0 bg-black rounded-full transition-all duration-300 ease-out group-hover:w-[calc(100%-2rem)]"></span></a>
+        </nav>
+    </div>
+
+    {% if messages %}
+        <div class="max-w-6xl mx-auto px-4 mt-6 w-full space-y-3">
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    <div class="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-3 rounded-lg text-sm">
+                        {{ message }}
+                    </div>
+                {% elif message.tags == 'error' %}
+                    <div class="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-3 rounded-lg text-sm">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="bg-gray-100 border border-gray-200 text-gray-800 px-4 py-3 rounded-lg text-sm">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-t border-gray-200 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-600">
+            <p>&copy; 2026 Win's Dev — Un pour tous, tous pour un.</p>
+        </div>
+    </footer>
+    </div>
+<script>
+        function toggleMenu(open) {
+            const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('menu-backdrop');
+            const openIcon = document.getElementById('menu-icon-open');
+            const closeIcon = document.getElementById('menu-icon-close');
+            const btn = document.getElementById('menu-btn');
+            const show = open !== undefined ? open : !menu.classList.contains('mm-open');
+            menu.classList.toggle('mm-open', show);
+            backdrop.classList.toggle('opacity-0', !show);
+            backdrop.classList.toggle('pointer-events-none', !show);
+            openIcon.classList.toggle('hidden', show);
+            closeIcon.classList.toggle('hidden', !show);
+            btn.setAttribute('aria-expanded', String(show));
+        }
+        document.getElementById('menu-btn').addEventListener('click', () => toggleMenu());
+        document.getElementById('menu-close').addEventListener('click', () => toggleMenu(false));
+        document.getElementById('menu-backdrop').addEventListener('click', () => toggleMenu(false));
+    </script>
+    <div id="toast" role="status" aria-live="polite"
+         class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] bg-black text-white text-sm font-medium px-6 py-3.5 rounded-full shadow-2xl opacity-0 pointer-events-none transition-opacity duration-300">
+        <span id="toast-text">En cours ...................</span>
+    </div>
+    <script>
+        var toastTimer = null;
+        function openProjet(btn) {
+            var url = btn.getAttribute('data-demo');
+            if (url) {
+                window.open(url, '_blank', 'noopener');
+            } else {
+                var toast = document.getElementById('toast');
+                toast.classList.remove('opacity-0');
+                toast.classList.add('opacity-100');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(function () {
+                    toast.classList.add('opacity-0');
+                    toast.classList.remove('opacity-100');
+                }, 3000);
+            }
+        }
+    </script>
+    <script>
+    (function () {
+        var loader = document.getElementById('loader-screen');
+        if (!loader) return;
+        var content = document.getElementById('page-content');
+        var bar = document.getElementById('loader-bar');
+        var pct = document.getElementById('loader-pct');
+        var body = document.body;
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        body.classList.add('overflow-hidden');
+
+        if (reduceMotion) {
+            loader.style.transition = 'opacity 200ms ease';
+            loader.style.opacity = '0';
+            content.classList.remove('opacity-0');
+            body.classList.remove('overflow-hidden');
+            setTimeout(function () { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 250);
+            return;
+        }
+
+        var DURATION = 1400;
+        var MIN_VISIBLE = 1000;
+        var START = performance.now();
+        var loaded = document.readyState === 'complete';
+
+        function easeOutExpo(t) { return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+
+        function removeLoader() {
+            if (loader.parentNode) loader.parentNode.removeChild(loader);
+        }
+
+        function hide() {
+            loader.style.transition = 'opacity 500ms ease, transform 500ms ease';
+            loader.style.opacity = '0';
+            loader.style.transform = 'scale(1.05)';
+            content.style.transition = 'opacity 600ms ease 110ms';
+            content.classList.remove('opacity-0');
+            body.classList.remove('overflow-hidden');
+            loader.addEventListener('transitionend', function (e) {
+                if (e.target === loader && e.propertyName === 'opacity') removeLoader();
+            });
+            setTimeout(removeLoader, 750);
+        }
+
+        function finish() {
+            bar.style.width = '100%';
+            if (pct) pct.textContent = '100%';
+            var wait = Math.max(0, MIN_VISIBLE - (performance.now() - START)) + 150;
+            setTimeout(hide, wait);
+        }
+
+        function tick(now) {
+            var t = Math.min((now - START) / DURATION, 1);
+            var progress = easeOutExpo(t) * 100;
+            if (!loaded) progress = Math.min(progress, 99);
+            bar.style.width = progress + '%';
+            if (pct) pct.textContent = Math.round(progress) + '%';
+            if (t >= 1 && loaded) finish();
+            else requestAnimationFrame(tick);
+        }
+
+        window.addEventListener('load', function () { loaded = true; });
+        setTimeout(function () { loaded = true; }, 6000);
+
+        requestAnimationFrame(tick);
+    })();
+    </script>
+    <script src="{% static 'portfolio/js/scroll-animations.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
