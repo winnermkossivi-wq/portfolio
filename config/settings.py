@@ -64,6 +64,8 @@ INSTALLED_APPS = [
     'portfolio',
     'blog',
     'contact',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -160,6 +162,15 @@ EMAIL_HOST_PASSWORD = env_str('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', True)
 DEFAULT_FROM_EMAIL = env_str('DEFAULT_FROM_EMAIL', 'WIN_S Dev <no-reply@example.com>')
 CONTACT_RECIPIENT = env_str('EMAIL_RECIPIENT', EMAIL_HOST_USER)
+
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'xanicyml',
+    'API_KEY': '534737873174193',
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Sécurité production
