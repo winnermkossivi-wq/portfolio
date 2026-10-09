@@ -4,3 +4,5 @@ whitenoise>=6.6
 Pillow
 django-cloudinary-storage
 cloudinary
+dj-database-url==3.1.2
+psycopg2-binary==2.9.12
