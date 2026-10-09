@@ -11,5 +11,5 @@ class ProjetAdmin(admin.ModelAdmin):
 
 @admin.register(Competence)
 class CompetenceAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'ordre')
-    list_editable = ('ordre',)
+    list_display = ('nom', 'categorie', 'niveau', 'ordre')
+    list_editable = ('categorie', 'niveau', 'ordre')

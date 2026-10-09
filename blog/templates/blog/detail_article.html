@@ -4,21 +4,21 @@
 
 {% block content %}
 <article class="reveal max-w-3xl mx-auto px-4 py-20">
-    <a href="{% url 'blog:liste_articles' %}" class="text-sm text-gray-500 hover:text-gray-700 transition">← Retour au blog</a>
+    <a href="{% url 'blog:liste_articles' %}" class="text-sm text-base-content/50 hover:text-base-content transition">← Retour au blog</a>
 
-    <h1 class="mt-6 text-4xl font-extrabold text-black tracking-tight">{{ article.titre }}</h1>
+    <h1 class="mt-6 text-4xl font-extrabold text-base-content tracking-tight">{{ article.titre }}</h1>
 
-    <p class="mt-4 text-sm text-gray-500">Publié le {{ article.date_publication|date:"d/m/Y à H:i" }}</p>
+    <p class="mt-4 text-sm text-base-content/50">Publié le {{ article.date_publication|date:"d/m/Y à H:i" }}</p>
 
     {% if article.image %}
-        <img src="{{ article.image.url }}" alt="{{ article.titre }}" class="mt-8 w-full rounded-2xl border border-gray-200">
+        <img src="{{ article.image.url }}" alt="{{ article.titre }}" class="mt-8 w-full rounded-2xl border border-base-content/10">
     {% endif %}
 
     {% if article.resume %}
-        <p class="mt-8 text-lg text-gray-700 font-medium italic">{{ article.resume }}</p>
+        <p class="mt-8 text-lg text-base-content/70 font-medium italic">{{ article.resume }}</p>
     {% endif %}
 
-    <div class="mt-6 space-y-4 text-gray-800 leading-relaxed">
+    <div class="mt-6 space-y-4 text-base-content/80 leading-relaxed">
         {{ article.contenu|linebreaks }}
     </div>
 </article>

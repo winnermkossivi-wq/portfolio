@@ -3,87 +3,98 @@
 
 {% block title %}WIN'S DEV — Développeur web Django & Python{% endblock %}
 
+{% block main_class %}stack-sections{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'portfolio/css/outils.css' %}">
+<script>
+    (function () {
+        var reduit = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduit && 'IntersectionObserver' in window) {
+            document.documentElement.classList.add('js-anim');
+        }
+    })();
+</script>
+{% endblock %}
+
 {% block content %}
 <style>
-    @keyframes floaty {
-        0%   { transform: rotate(0deg) translateY(0); }
-        15%  { transform: rotate(360deg) translateY(-8px); }
-        25%  { transform: rotate(360deg) translateY(0); }
-        62%  { transform: rotate(360deg) translateY(-8px); }
-        75%  { transform: rotate(360deg) translateY(0); }
-        100% { transform: rotate(360deg) translateY(0); }
+    @keyframes photo-float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
     }
-    .animate-floaty { animation: floaty 6s ease-in-out infinite; }
+    .animate-photo-float { animation: photo-float 5s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+        .animate-photo-float { animation: none !important; }
+    }
 </style>
 
 <!-- Hero -->
-<section class="reveal relative max-w-6xl mx-auto px-4 py-10 md:py-14 min-h-screen flex items-center justify-center">
-    <div class="text-center">
-        <div class="relative inline-flex mx-auto mb-8">
-            <img src="{% static 'portfolio/images/profil.jpg' %}" alt="Photo de profil"
-                 class="w-32 h-32 md:w-36 md:h-36 rounded-full border-2 border-black/50 object-cover shadow-2xl shadow-black/10">
-            <a href="https://github.com/winnermkossivi-wq" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub"
-               class="md:hidden absolute -top-2.5 -left-2.5 flex items-center justify-center w-9 h-9 bg-white rounded-full border border-gray-200 shadow-md animate-floaty" style="animation-delay:0s">
-                <svg class="w-4 h-4" fill="#181717" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            </a>
-            <a href="https://www.facebook.com/share/19STQWsnyK/" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"
-               class="md:hidden absolute -top-2.5 -right-2.5 flex items-center justify-center w-9 h-9 bg-white rounded-full border border-gray-200 shadow-md animate-floaty" style="animation-delay:0.6s">
-                <svg class="w-4 h-4" fill="#1877F2" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-            <a href="https://www.instagram.com/reel/Dc3VrrxM6BY/?stkn=MXA4aTVtN2RuZXZqNg==" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram"
-               class="md:hidden absolute -bottom-2.5 -left-2.5 flex items-center justify-center w-9 h-9 bg-white rounded-full border border-gray-200 shadow-md animate-floaty" style="animation-delay:1.2s">
-                <svg class="w-4 h-4" fill="none" stroke="url(#ig-gradient-avatar)" stroke-width="1.8" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="ig-gradient-avatar" x1="0" y1="0" x2="24" y2="24"><stop offset="0%" stop-color="#833AB4"/><stop offset="50%" stop-color="#FD1D1D"/><stop offset="100%" stop-color="#FCB045"/></linearGradient></defs><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="url(#ig-gradient-avatar)" stroke="none"/></svg>
-            </a>
-            <a href="https://wa.me/22603653909" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp"
-               class="md:hidden absolute -bottom-2.5 -right-2.5 flex items-center justify-center w-9 h-9 bg-white rounded-full border border-gray-200 shadow-md animate-floaty" style="animation-delay:1.8s">
-                <svg class="w-4 h-4" fill="#25D366" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            </a>
+<section class="reveal relative w-full bg-base-100 wa-pattern py-10 md:py-14 min-h-screen flex items-center overflow-hidden">
+    <div class="relative z-10 w-full max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="text-center md:order-1">
+            <div class="inline-block text-left bg-base-300 rounded-3xl border border-base-content/10 shadow-xl shadow-black/5 px-6 py-6 md:px-10 md:py-8 -rotate-2">
+                <div class="flex items-center gap-2 mb-5" aria-hidden="true">
+                    <span class="w-3 h-3 rounded-full bg-[#ff5f57]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#febc2e]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-base-content tracking-tight leading-tight text-center">
+                    Hello, je suis <span class="uppercase text-white hero-brand" style="display: inline-block;">Win's Dev</span>
+                </h1>
+                <p class="font-inter mt-6 text-xl md:text-2xl text-base-content/80 font-medium text-center">
+                    Développeur web passionné par Django et l'écosystème Python, je crée des applications rapides, sécurisées et intuitives.
+                </p>
+                <p class="font-inter mt-3 text-base-content/60 max-w-2xl mx-auto text-center">
+                    Au programme : des projets concrets, du code propre et une attention particulière à l'expérience utilisateur.
+                </p>
+            </div>
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                <a href="{% url 'contact:contact' %}" class="btn btn-soft btn-secondary">Me contacter</a>
+                <a href="#projets" class="btn btn-soft btn-secondary">Voir mes projets</a>
+            </div>
         </div>
-        <div class="inline-block bg-white rounded-3xl border border-gray-200 shadow-xl shadow-black/5 px-6 py-6 md:px-10 md:py-8">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-black tracking-tight leading-tight">
-                Hello, je suis <span class="uppercase text-transparent" style="-webkit-text-stroke: 2px #eab308; display: inline-block;">Win's Dev</span>
-            </h1>
-            <p class="mt-6 text-xl md:text-2xl text-gray-800 font-medium">
-                Développeur web passionné par Django et l'écosystème Python, je crée des applications rapides, sécurisées et intuitives.
-            </p>
-            <p class="mt-3 text-gray-600 max-w-2xl mx-auto">
-                Au programme : des projets concrets, du code propre et une attention particulière à l'expérience utilisateur.
-            </p>
-        </div>
-        <div class="mt-10 flex flex-wrap justify-center gap-4">
-            <a href="{% url 'contact:contact' %}" class="bg-black text-white font-semibold px-6 py-3 rounded-full hover:bg-gray-700 transition">Me contacter</a>
-            <a href="#projets" class="bg-yellow-400 border border-yellow-500 text-white font-semibold px-6 py-3 rounded-full hover:bg-yellow-500 transition">Voir mes projets</a>
+        <div class="relative mx-auto w-full max-w-[420px] md:order-2">
+            <div aria-hidden="true" class="absolute -inset-3 md:-inset-6 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+            <div class="relative p-2 rounded-full bg-white shadow-2xl shadow-primary/20 animate-photo-float">
+                <div class="relative overflow-hidden rounded-full aspect-square bg-base-100">
+                    <img src="{% static 'portfolio/images/profil.jpg' %}" alt="Photo de profil"
+                         class="w-full h-full object-cover object-top scale-[1.29] origin-[center_55%] saturate-[1.1] contrast-[1.05]">
+                    <div aria-hidden="true" class="absolute inset-0 bg-base-100/30 pointer-events-none"></div>
+                    <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-base-100/60 via-transparent to-transparent pointer-events-none"></div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- À propos -->
-<section id="a-propos" class="reveal relative border-y border-gray-200 bg-gray-100">
+<section id="a-propos" class="reveal relative border-y border-base-content/10 bg-base-200 wa-pattern">
     <div class="max-w-6xl mx-auto px-4 py-20">
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div>
-                <h2 class="text-3xl font-bold text-black">À propos de moi</h2>
-                <p class="mt-4 text-gray-700 leading-relaxed">
+                <h2 class="text-3xl font-bold text-base-content">À propos de moi</h2>
+                <p class="mt-4 text-base-content/70 leading-relaxed">
                     Je suis Win's Dev, développeur web spécialisé dans Django et Python. J'aime résoudre des
                     problèmes concrets en construisant des applications utiles, du prototype à la mise en
                     production. Curieux et rigoureux, j'apprends en continu et je partage mes découvertes
                     sur ce blog — c'est l'esprit de ce portfolio.
                 </p>
             </div>
-            <div class="bg-[#1877F2] rounded-2xl p-8 border border-[#1367c9] shadow-sm">
-                <h3 class="text-lg font-semibold text-white mb-6">Quelques chiffres</h3>
+            <div class="bg-accent rounded-2xl p-8 border border-accent-content/20 shadow-sm">
+                <h3 class="text-lg font-semibold text-accent-content mb-6">Quelques chiffres</h3>
                 <div class="grid grid-cols-3 gap-6 text-center">
                     <div>
-                        <p class="stat-number text-3xl font-extrabold text-white" data-target="5">+5</p>
-                        <p class="text-sm text-white/80 mt-1">Projets</p>
+                        <p class="stat-number text-3xl font-extrabold text-accent-content" data-target="{{ projets|length }}">+{{ projets|length }}</p>
+                        <p class="text-sm text-accent-content/80 mt-1">Projets</p>
                     </div>
                     <div>
-                        <p class="stat-number text-3xl font-extrabold text-white" data-target="2">+2</p>
-                        <p class="text-sm text-white/80 mt-1">Années d'expérience</p>
+                        <p class="stat-number text-3xl font-extrabold text-accent-content" data-target="2">+2</p>
+                        <p class="text-sm text-accent-content/80 mt-1">Années d'expérience</p>
                     </div>
                     <div>
-                        <p class="stat-number text-3xl font-extrabold text-white" data-target="10">+10</p>
-                        <p class="text-sm text-white/80 mt-1">Technologies</p>
+                        <p class="stat-number text-3xl font-extrabold text-accent-content" data-target="{{ competences|length }}">+{{ competences|length }}</p>
+                        <p class="text-sm text-accent-content/80 mt-1">Technologies</p>
                     </div>
                 </div>
             </div>
@@ -92,15 +103,21 @@
 </section>
 
 <!-- Projets -->
-<section id="projets" class="relative max-w-6xl mx-auto px-4 py-20">
+<section id="projets" class="relative w-full bg-white py-20">
+    <div class="max-w-6xl mx-auto px-4">
     <div class="reveal">
-        <h2 class="text-3xl font-bold text-black">Mes projets</h2>
-        <p class="mt-2 text-gray-600">Une sélection de réalisations à retrouver sur GitHub.</p>
+        <h2 class="text-3xl font-bold text-base-content">Mes projets</h2>
+        <p class="mt-2 text-base-content/60">Une sélection de réalisations à retrouver sur GitHub.</p>
     </div>
 
-    <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="relative mt-10">
+        <button id="proj-prev" type="button" aria-label="Projet précédent"
+                class="btn btn-circle btn-primary absolute left-0 top-1/2 -translate-y-1/2 z-20 shadow-lg">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div id="projets-track" class="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth py-2 px-0 [&>*:first-child]:ml-auto [&>*:last-child]:mr-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {% for projet in projets %}
-        <div class="reveal" style="--index:{{ forloop.counter0 }}">
+        <div class="reveal shrink-0 snap-center w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.07rem)]" style="--index:{{ forloop.counter0 }}">
         {% if projet.titre == 'MyScan' %}
         <article class="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] border border-white/25 rounded-2xl overflow-hidden shadow-lg shadow-[#833ab4]/20 hover:shadow-xl hover:shadow-[#833ab4]/30 hover:-translate-y-1 transition duration-300">
             {% if projet.image %}
@@ -122,7 +139,7 @@
                 {% endif %}
                 <div class="mt-5 flex flex-wrap items-center gap-3">
                     <button type="button" data-demo="{{ projet.lien_demo|default:'' }}" onclick="openProjet(this)"
-                            class="inline-flex items-center gap-1.5 bg-white text-[#833AB4] text-sm font-semibold px-4 py-2 rounded-full hover:bg-white/85 transition">Voir le projet <span aria-hidden="true">→</span></button>
+                            class="btn btn-dash btn-accent btn-sm">Voir le projet <span aria-hidden="true">→</span></button>
                     {% if projet.lien_github %}
                         <a href="{{ projet.lien_github }}" target="_blank" rel="noopener" class="text-sm text-white/90 hover:text-white transition">GitHub</a>
                     {% endif %}
@@ -150,7 +167,7 @@
                 {% endif %}
                 <div class="mt-5 flex flex-wrap items-center gap-3">
                     <button type="button" data-demo="{{ projet.lien_demo|default:'' }}" onclick="openProjet(this)"
-                            class="inline-flex items-center gap-1.5 bg-white text-[#833AB4] text-sm font-semibold px-4 py-2 rounded-full hover:bg-white/85 transition">Voir le projet <span aria-hidden="true">→</span></button>
+                            class="btn btn-dash btn-accent btn-sm">Voir le projet <span aria-hidden="true">→</span></button>
                     {% if projet.lien_github %}
                         <a href="{{ projet.lien_github }}" target="_blank" rel="noopener" class="text-sm text-white/90 hover:text-white transition">GitHub</a>
                     {% endif %}
@@ -158,29 +175,29 @@
             </div>
         </article>
         {% else %}
-        <article class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:border-black hover:shadow-lg hover:-translate-y-1 transition duration-300">
+        <article class="bg-base-100 projet-carte-defaut border border-base-content/10 rounded-2xl overflow-hidden shadow-sm hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300">
             {% if projet.image %}
                 <img src="{{ projet.image.url }}" alt="{{ projet.titre }}" class="w-full h-48 object-cover">
             {% else %}
-                <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+                <div class="w-full h-48 bg-base-200 flex items-center justify-center text-base-content/40">
                     <span class="text-4xl">🖼️</span>
                 </div>
             {% endif %}
             <div class="p-6">
-                <h3 class="text-xl font-semibold text-black">{{ projet.titre }}</h3>
-                <p class="mt-2 text-sm text-gray-600 leading-relaxed">{{ projet.description|truncatewords:30 }}</p>
+                <h3 class="text-xl font-semibold text-base-content">{{ projet.titre }}</h3>
+                <p class="mt-2 text-sm text-base-content/60 leading-relaxed">{{ projet.description|truncatewords:30 }}</p>
                 {% if projet.stack_liste %}
                     <div class="mt-4 flex flex-wrap gap-2">
                         {% for tech in projet.stack_liste %}
-                            <span class="bg-gray-100 text-gray-600 text-xs font-medium px-3 py-1 rounded-full">{{ tech }}</span>
+                            <span class="bg-base-200 text-base-content/70 text-xs font-medium px-3 py-1 rounded-full">{{ tech }}</span>
                         {% endfor %}
                     </div>
                 {% endif %}
                 <div class="mt-5 flex flex-wrap items-center gap-3">
                     <button type="button" data-demo="{{ projet.lien_demo|default:'' }}" onclick="openProjet(this)"
-                            class="inline-flex items-center gap-1.5 bg-black text-white text-sm font-semibold px-4 py-2 rounded-full hover:bg-gray-700 transition">Voir le projet <span aria-hidden="true">→</span></button>
+                            class="btn btn-dash btn-accent btn-sm">Voir le projet <span aria-hidden="true">→</span></button>
                     {% if projet.lien_github %}
-                        <a href="{{ projet.lien_github }}" target="_blank" rel="noopener" class="text-sm text-gray-700 hover:text-black transition">GitHub</a>
+                        <a href="{{ projet.lien_github }}" target="_blank" rel="noopener" class="text-sm text-base-content/70 hover:text-base-content transition">GitHub</a>
                     {% endif %}
                 </div>
             </div>
@@ -188,27 +205,48 @@
         {% endif %}
         </div>
         {% empty %}
-        <p class="text-gray-500 col-span-full">Aucun projet mis en avant pour le moment.</p>
+        <p class="text-base-content/50 w-full text-center py-10">Aucun projet mis en avant pour le moment.</p>
         {% endfor %}
+        </div>
+        <button id="proj-next" type="button" aria-label="Projet suivant"
+                class="btn btn-circle btn-primary absolute right-0 top-1/2 -translate-y-1/2 z-20 shadow-lg">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+    </div>
     </div>
 </section>
 
 <!-- Compétences -->
-<section id="competences" class="reveal relative border-t border-gray-200 bg-gray-100">
+<section id="competences" class="reveal relative border-t border-base-content/10 bg-base-200 wa-pattern">
     <div class="max-w-6xl mx-auto px-4 py-20">
         <div>
-            <h2 class="text-3xl font-bold text-black">Mes compétences</h2>
-            <p class="mt-2 text-gray-600">Les technologies et outils que j'utilise au quotidien.</p>
+        <h2 class="text-3xl font-bold text-base-content">Mes compétences</h2>
+        <p class="mt-2 text-base-content/60">Les technologies et outils que j'utilise au quotidien.</p>
         </div>
 
-        <div class="mt-10 flex flex-wrap gap-4">
-            {% for competence in competences %}
-                <span class="bg-white border border-gray-300 rounded-full px-4 py-2.5 flex items-center gap-2.5 hover:border-black transition">
-                    {% if competence.logo %}<img src="{{ competence.logo }}" alt="{{ competence.nom }}" class="h-5 w-auto">{% endif %}
-                    <span class="text-sm font-medium text-gray-800">{{ competence.nom }}</span>
-                </span>
+        <div class="outils-grille">
+            {% for categorie in outils_categories %}
+            <article class="outil-carte reveal" style="--index:{{ forloop.counter0 }}">
+                <h3 class="outil-carte-titre">{{ categorie.nom }}</h3>
+                <ul class="outil-liste">
+                    {% for outil in categorie.outils %}
+                    <li class="outil" style="--niveau:{{ outil.niveau }}%" data-niveau="{{ outil.niveau }}">
+                        <div class="outil-entete">
+                            <span class="outil-icone" data-outil="{{ outil.nom }}" aria-hidden="true">
+                                <span class="outil-lettre">{{ outil.nom|first }}</span>
+                            </span>
+                            <span class="outil-nom">{{ outil.nom }}</span>
+                            <span class="outil-pct">{{ outil.niveau }}%</span>
+                        </div>
+                        <div class="outil-piste">
+                            <div class="outil-remplissage"></div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </article>
             {% empty %}
-                <p class="text-gray-500">Aucune compétence renseignée pour le moment.</p>
+            <p class="outils-vide">Aucun outil renseigné pour le moment.</p>
             {% endfor %}
         </div>
     </div>
@@ -264,6 +302,22 @@
     window.addEventListener('resize', measure, { passive: true });
     measure();
     step();
+})();
+</script>
+<script>
+(function () {
+    var track = document.getElementById('projets-track');
+    var prev = document.getElementById('proj-prev');
+    var next = document.getElementById('proj-next');
+    if (!track || !prev || !next) return;
+    function step() {
+        var card = track.firstElementChild;
+        if (!card) return track.clientWidth;
+        var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        return card.getBoundingClientRect().width + gap;
+    }
+    prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
 })();
 </script>
 {% endblock %}

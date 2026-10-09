@@ -15,6 +15,20 @@ LOGOS = {
 }
 
 
+ORDRE_CATEGORIES = ["Backend", "Mobile", "Frontend", "Outils"]
+
+
+def outils_par_categorie():
+    groupes = {}
+    for c in Competence.objects.all():
+        groupes.setdefault(c.categorie or "Outils", []).append(
+            {"nom": c.nom, "niveau": c.niveau}
+        )
+    categories = [cat for cat in ORDRE_CATEGORIES if cat in groupes]
+    categories += [cat for cat in groupes if cat not in ORDRE_CATEGORIES]
+    return [{"nom": cat, "outils": groupes[cat]} for cat in categories]
+
+
 def accueil(request):
     projets = Projet.objects.filter(en_avant=True)
     competences = list(Competence.objects.all())
@@ -23,4 +37,5 @@ def accueil(request):
     return render(request, 'portfolio/accueil.html', {
         'projets': projets,
         'competences': competences,
+        'outils_categories': outils_par_categorie(),
     })

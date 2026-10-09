@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator
 from django.db import models
 
 
@@ -26,7 +27,23 @@ class Projet(models.Model):
 
 
 class Competence(models.Model):
+    class Categorie(models.TextChoices):
+        BACKEND = "Backend", "Backend"
+        MOBILE = "Mobile", "Mobile"
+        FRONTEND = "Frontend", "Frontend"
+        OUTILS = "Outils", "Outils"
+
     nom = models.CharField(max_length=100)
+    categorie = models.CharField(
+        max_length=20,
+        choices=Categorie.choices,
+        default=Categorie.OUTILS,
+    )
+    niveau = models.PositiveIntegerField(
+        default=80,
+        validators=[MaxValueValidator(100)],
+        help_text="Niveau de 0 à 100.",
+    )
     ordre = models.PositiveIntegerField(default=0)
 
     class Meta:
