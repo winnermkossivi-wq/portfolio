@@ -200,20 +200,16 @@ USE_TZ = True
 # STATIC FILES
 # ============================================================
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-STATICFILES_STORAGE = (
-    "whitenoise.storage.CompressedManifestStaticFilesStorage"
-)
 
 
 # ============================================================
 # MEDIA FILES
 # ============================================================
 
-MEDIA_URL = "media/"
+MEDIA_URL = "/media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -265,13 +261,47 @@ CONTACT_RECIPIENT = env_str(
 # ============================================================
 # CLOUDINARY (stockage des images uploadées)
 # ============================================================
+#
+# En production, les images doivent être stockées sur Cloudinary :
+# le disque de Render (offre gratuite) est éphémère et efface les
+# fichiers uploadés au moindre redémarrage.
+#
+# Les 3 identifiants sont lus dans l'environnement. S'ils sont tous
+# présents on utilise Cloudinary, sinon on retombe sur le stockage
+# local (pratique en développement).
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': env_str('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': env_str('CLOUDINARY_API_KEY'),
     'API_SECRET': env_str('CLOUDINARY_API_SECRET'),
 }
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+USE_CLOUDINARY = all(CLOUDINARY_STORAGE.values())
+
+if USE_CLOUDINARY:
+    DEFAULT_STORAGE_BACKEND = (
+        "cloudinary_storage.storage.MediaCloudinaryStorage"
+    )
+else:
+    DEFAULT_STORAGE_BACKEND = (
+        "django.core.files.storage.FileSystemStorage"
+    )
+
+
+# ============================================================
+# STORAGE (Django >= 4.2)
+# ============================================================
+
+STORAGES = {
+    "default": {
+        "BACKEND": DEFAULT_STORAGE_BACKEND,
+    },
+    "staticfiles": {
+        "BACKEND": (
+            "whitenoise.storage.CompressedManifestStaticFilesStorage"
+        ),
+    },
+}
 
 
 # ============================================================
