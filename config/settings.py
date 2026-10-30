@@ -326,3 +326,16 @@ if not DEBUG:
         "HTTP_X_FORWARDED_PROTO",
         "https"
     )
+
+
+
+
+
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn="https://5fd0ef8863e9bd73090239d43dbb5970@o4512347067121664.ingest.de.sentry.io/4512347156185168",
+    # To customize collected data (user info, request bodies, AI inputs/outputs),
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/
+    # data_collection={"user_info": False},
+)
